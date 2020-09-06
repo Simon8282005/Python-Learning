@@ -1,0 +1,66 @@
+HTML 基本格式
+
+	|	<html> 	
+	|	  |    \
+	|	  |      \	
+	|	  |        \ 
+	|	  |          \
+   \ /	  |           \
+	'	<head> --->   <body>         .
+		  |		      /	     \      / \
+		  | 		 /		  \	     |
+		<title>		<p>		  <p>    |
+		  	         |	     /   \   |
+					<b>		<a>	 <a> |
+
+	|   
+	|    下行遍历                 
+   \ /                 
+	'
+
+	-----> 平行遍历         
+
+	 .
+ 	/ \    
+	 |     上行遍历
+	 |
+	 |
+
+BeautifulSoup 的遍历方式可以分为三个，分别是：
+- 下行遍历
+- 平行遍历
+- 上行遍历
+
+下行遍历：
+    属性                  说明
+- .contents      子节点的列表，将`<tag>`所有的儿节点存入列表（比如`<head>.contents`就是`<head>`）
+- .children      子节点的送代类型，与.contents类似，用于循环遍历儿子节点(同上)
+- .descendants   子孙节点的送代类系，包含所以子孙节点，用于循环遍历（比如`<body>.descendants`就是`<p>, <b>, <a>`）
+
+下行遍历的实现：
+for child in soup.body.children:  遍历儿子节点
+	print(child)
+
+for child in soup.body.descendants:  遍历子孙节点
+	print(child)
+
+- soup.head.contents  # head 的儿子节点
+Output:
+[<title>This is a python demo page</title>]
+
+- soup.body.contents  # body 的儿子节点
+Output:
+['\n', <p class="title"><b>The demo python introduces several python courses.</b></p>, '\n', <p class="course">Python is a wonderful general-purpose programming language. You can learn Python from novice to professional by tracking the following courses:
+<a class="py1" href="http://www.icourse163.org/course/BIT-268001" id="link1">Basic Python</a> and <a class="py2" href="http://www.icourse163.org/course/BIT-1001870001" id="link2">Advanced Python</a>.</p>, '\n']
+
+- len(soup.body.contents)  # 查看 body 有多少个儿子节点
+Output:
+5
+
+- soup.body.contents[1]  # 打印 dody 的第一个儿子节点
+<p class="title"><b>The demo python introduces several python courses.</b></p>
+
+上行遍历：
+	属性              说明
+.parent    节点的父亲标签
+.parents   节点先辈(父亲的父亲)标签的送代类型，用于循环遍历先辈节点
